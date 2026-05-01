@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>LUMIN AI · Gerador de Ícones</title>
+<style>
+body{background:#000;color:#00d4ff;font-family:monospace;padding:1.5rem;display:flex;flex-direction:column;align-items:center;gap:1rem}
+canvas{border:1px solid #00d4ff33;border-radius:12px}
+button{background:#00d4ff;color:#000;border:none;padding:.6rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:bold;margin:.25rem}
+.row{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+p{color:#4e8fa3;font-size:.75rem;text-align:center}
+</style>
+</head>
+<body>
+<h2>⬡ LUMIN AI — Gerador de Ícones PWA</h2>
+<p>Gera os ícones 192×192 e 512×512 para a pasta <code>icons/</code></p>
+<div class="row">
+  <div><p>192×192</p><canvas id="c192" width="192" height="192"></canvas></div>
+  <div><p>512×512</p><canvas id="c512" width="512" height="512"></canvas></div>
+</div>
+<div class="row">
+  <button onclick="download('c192','icon-192.png')">⬇ icon-192.png</button>
+  <button onclick="download('c512','icon-512.png')">⬇ icon-512.png</button>
+</div>
+<p>Coloca os ficheiros na pasta <code>icons/</code> do projeto.</p>
+
+<script>
+function drawIcon(canvas) {
+  const s = canvas.width;
+  const ctx = canvas.getContext('2d');
+  const cx = s / 2, cy = s / 2;
+
+  // Fundo
+  const bg = ctx.createRadialGradient(cx, cy, s * 0.05, cx, cy, s * 0.65);
+  bg.addColorStop(0, '#06101c');
+  bg.addColorStop(1, '#000810');
+  ctx.fillStyle = bg;
+  ctx.beginPath();
+  ctx.roundRect(0, 0, s, s, s * 0.18);
+  ctx.fill();
+
+  // Hexágono exterior (borda)
+  const R = s * 0.40;
+  ctx.beginPath();
+  for (let i = 0; i < 6; i++) {
+    const a = Math.PI / 180 * (60 * i - 30);
+    const x = cx + R * Math.cos(a), y = cy + R * Math.sin(a);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  const grad = ctx.createLinearGradient(cx - R, cy - R, cx + R, cy + R);
+  grad.addColorStop(0, '#00d4ff');
+  grad.addColorStop(1, '#00ff9d');
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = s * 0.04;
+  ctx.stroke();
+
+  // Hexágono interior (fill translúcido)
+  const Ri = s * 0.33;
+  ctx.beginPath();
+  for (let i = 0; i < 6; i++) {
+    const a = Math.PI / 180 * (60 * i - 30);
+    const x = cx + Ri * Math.cos(a), y = cy + Ri * Math.sin(a);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(0,212,255,0.07)';
+  ctx.fill();
+
+  // Texto "L"
+  ctx.fillStyle = '#fff';
+  ctx.font = `bold ${s * 0.38}px "Courier New", monospace`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  // glow
+  ctx.shadowColor = '#00d4ff';
+  ctx.shadowBlur = s * 0.08;
+  ctx.fillText('L', cx, cy + s * 0.02);
+  ctx.shadowBlur = 0;
+
+  // Ponto inferior
+  ctx.fillStyle = '#00ff9d';
+  ctx.shadowColor = '#00ff9d';
+  ctx.shadowBlur = s * 0.04;
+  ctx.beginPath();
+  ctx.arc(cx, cy + s * 0.30, s * 0.025, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // "AI" pequeno
+  ctx.fillStyle = '#00d4ff';
+  ctx.font = `bold ${s * 0.08}px "Courier New", monospace`;
+  ctx.fillText('AI', cx, cy + s * 0.22);
+}
+
+const c192 = document.getElementById('c192');
+const c512 = document.getElementById('c512');
+drawIcon(c192);
+drawIcon(c512);
+
+function download(id, filename) {
+  const a = document.createElement('a');
+  a.href = document.getElementById(id).toDataURL('image/png');
+  a.download = filename;
+  a.click();
+}
+</script>
+</body>
+</html>
