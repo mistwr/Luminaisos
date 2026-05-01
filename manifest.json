@@ -1,0 +1,52 @@
+{
+  "name": "LUMIN AI — Emergência",
+  "short_name": "LUMIN AI",
+  "description": "Assistente de emergência 100% offline com IA no dispositivo. Protocolos médicos, GPS e contactos SOS para Portugal.",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#00d4ff",
+  "lang": "pt-PT",
+  "categories": ["medical", "health", "utilities"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "icons/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "SOS — Ligar 112",
+      "short_name": "SOS 112",
+      "description": "Liga diretamente para 112",
+      "url": "./index.html#sos",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Protocolos Médicos",
+      "short_name": "Protocolos",
+      "description": "Acede aos protocolos offline",
+      "url": "./index.html#med",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
